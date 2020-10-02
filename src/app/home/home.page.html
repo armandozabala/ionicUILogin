@@ -1,20 +1,50 @@
-<ion-header [translucent]="true">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;400&display=swap" rel="stylesheet">
+
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>
-      Blank
+    <div class="back-circle"></div>
+    <ion-title class="ion-text-center custom-font">
+      Sign Up
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+
+  <svg class="back-blob" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#FF0066" d="M46.5,-55.7C61.6,-42.7,76,-29.3,79,-13.7C82,1.9,73.5,19.7,63.7,36.9C53.9,54.1,42.8,70.7,28.3,74.6C13.8,78.4,-4.1,69.5,-23.2,62.9C-42.3,56.3,-62.5,52.1,-75,39.1C-87.6,26.1,-92.4,4.5,-89.1,-16C-85.8,-36.5,-74.5,-55.8,-58.3,-68.6C-42,-81.3,-21,-87.4,-2.7,-84.2C15.7,-81,31.4,-68.6,46.5,-55.7Z" transform="translate(100 100)" />
+  </svg>
+
+  <div class="ion-padding">
+      <form class="ion-padding">
+
+        <div class="wrap-input">
+            <input class="input" type="text" name="user-name" placeholder="Full Name">
+        </div>
+
+        <div class="wrap-input">
+          <input class="input" type="email" name="user-name" placeholder="Full Name">
+      </div>
+
+      <div class="wrap-input">
+        <input class="input" type="password" name="user-name" placeholder="Full Name">
+    </div>
+
+    <div class="container-form-btn">
+      <button class="form-btn custom-font">
+      Submit
+      </button>
+    </div>  
+
+      </form>
   </div>
+
 </ion-content>
+
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <p class="ion-text-center custom-font">Already have an account <a href="">Sign In</a> </p>
+  </ion-toolbar>
+</ion-footer>
