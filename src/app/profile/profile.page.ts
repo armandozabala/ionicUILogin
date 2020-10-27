@@ -1,8 +1,12 @@
+import { PhotoService } from './../services/photo.service';
+import { StorageService } from './../services/storage.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { FirestoreService } from '../services/firestore.service';
-import { ToastController } from '@ionic/angular';
+import { ActionSheetController, ToastController } from '@ionic/angular';
+import { ScrollDetail } from '@ionic/core';
+
 
 @Component({
   selector: 'app-profile',
@@ -13,9 +17,15 @@ export class ProfilePage implements OnInit {
 
   formEdit: FormGroup;
   id:any;
+  IMAGE_PATH: any;
+  showToolbar = false;
+
 
   constructor(private authService: AuthService, 
               private afs: FirestoreService, 
+              private photo: PhotoService,
+              private actionSheetController: ActionSheetController,
+              private storage: StorageService,
               public toastController: ToastController  ) { }
 
   ngOnInit() {
@@ -30,15 +40,26 @@ export class ProfilePage implements OnInit {
     
     console.log(this.id);
 
-    this.afs.getUser(this.id).subscribe(res => {
+    this.afs.getUser(this.id).subscribe( (res:any) => {
 
         console.log(res);
 
         this.initValueForm(res);
 
+        this.formEdit.value.img =  res.img != null ?  res.img :  this.IMAGE_PATH='../../../assets/imgs/logocirculo.png';
+
+        this.IMAGE_PATH = this.formEdit.value.img;
+
     })
 
 
+  }
+
+  onScroll($event: CustomEvent<ScrollDetail>) {
+    if ($event && $event.detail && $event.detail.scrollTop) {
+      const scrollTop = $event.detail.scrollTop;
+      this.showToolbar = scrollTop >= 225;
+    }
   }
 
   edit(form){
@@ -74,6 +95,82 @@ export class ProfilePage implements OnInit {
       duration: 2000
     });
     toast.present();
+  }
+
+
+
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Options',
+      cssClass: 'my-custom-class',
+      buttons: [{
+        text: 'Camara',
+        role: 'destructive',
+        icon: 'camera',
+        handler: () => {
+          this.captureImage();
+        }
+      },
+      {
+        text: 'Library',
+        role: 'destructive',
+        icon: 'image',
+        handler: () => {
+          this.selectMedia();
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
+
+   selectMedia() {
+
+    this.photo.captureGalery().then( (imageData) => {
+     
+      
+
+      setTimeout( async () => {
+
+        this.IMAGE_PATH = 'data:image/jpeg;base64,' + imageData;
+
+        const fileData = this.storage.dataURLToBlob( this.IMAGE_PATH);
+
+        this.formEdit.value.img =  await this.storage.startUpload(fileData, 'photos');
+
+      },500)
+     
+    }, (err) => {
+      console.log(err);
+       this.IMAGE_PATH = '../../../assets/imgs/logocirculo.png';
+    });
+  
+  }
+
+  captureImage(){
+    this.photo.captureCamera().then((imageData) => {
+     
+       setTimeout( async () => {
+
+        this.IMAGE_PATH = 'data:image/jpeg;base64,' + imageData;
+
+        const fileData = this.storage.dataURLToBlob( this.IMAGE_PATH);
+
+        this.formEdit.value.img = await this.storage.startUpload(fileData, 'photos');
+        
+      },500)
+     
+    }, (err) => {
+      console.log(err);
+       this.IMAGE_PATH = '../../../assets/imgs/logocirculo.png';
+    });
   }
 
 }

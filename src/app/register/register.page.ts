@@ -1,8 +1,9 @@
-import { MenuController } from '@ionic/angular';
+import { MenuController, ToastController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { FirestoreService } from '../services/firestore.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -15,6 +16,8 @@ export class RegisterPage implements OnInit {
 
   constructor( private authService: AuthService, 
                private afs: FirestoreService,
+               private router: Router,
+               private toastController: ToastController,
                private menuCtrl: MenuController   ) { }
 
   ngOnInit() {
@@ -44,6 +47,11 @@ export class RegisterPage implements OnInit {
 
             console.log(data);
 
+            this.router.navigate(['/login']);
+
+            this.presentToast();
+
+
         }).catch(err => {
 
           console.log("inside"+err);
@@ -56,6 +64,14 @@ export class RegisterPage implements OnInit {
 
     })
 
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Your have been saved.',
+      duration: 2000
+    });
+    toast.present();
   }
 
 }

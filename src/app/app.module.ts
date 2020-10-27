@@ -17,6 +17,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import { Camera } from '@ionic-native/camera/ngx';
+import { CameraPreview } from '@ionic-native/camera-preview/ngx';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -31,6 +33,8 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   providers: [
+    Camera,
+    CameraPreview,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
