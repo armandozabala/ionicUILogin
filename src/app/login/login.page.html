@@ -1,0 +1,48 @@
+
+
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <div class="back-circle"></div>
+    <ion-title class="ion-text-center custom-font">
+      Sign Up
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+
+  <svg class="back-blob" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#FF0066" d="M46.5,-55.7C61.6,-42.7,76,-29.3,79,-13.7C82,1.9,73.5,19.7,63.7,36.9C53.9,54.1,42.8,70.7,28.3,74.6C13.8,78.4,-4.1,69.5,-23.2,62.9C-42.3,56.3,-62.5,52.1,-75,39.1C-87.6,26.1,-92.4,4.5,-89.1,-16C-85.8,-36.5,-74.5,-55.8,-58.3,-68.6C-42,-81.3,-21,-87.4,-2.7,-84.2C15.7,-81,31.4,-68.6,46.5,-55.7Z" transform="translate(100 100)" />
+  </svg>
+
+  <div class="ion-padding">
+      <form [formGroup]="formLogin" class="ion-padding" (ngSubmit)="login(formLogin)">
+
+        <div class="wrap-input">
+            <input class="input" type="text" formControlName="email" name="email" placeholder="Email">
+        </div>
+
+        <div class="wrap-input">
+          <input class="input" type="password" formControlName="password" name="user-name" placeholder="Password">
+      </div>
+
+  
+
+    <div class="container-form-btn">
+      <button type="submit" class="form-btn custom-font">
+      Submit
+      </button>
+    </div>  
+
+      </form>
+  </div>
+
+</ion-content>
+
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <p class="ion-text-center custom-font">You need an account <a routerLink="/register">Sign Up</a> </p>
+  </ion-toolbar>
+</ion-footer>

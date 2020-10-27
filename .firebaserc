@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "restaurantearm": {
+      "hosting": {
+        "app": [
+          "restaurantearm"
+        ]
+      }
+    }
+  }
+}
