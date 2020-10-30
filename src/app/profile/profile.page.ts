@@ -70,7 +70,7 @@ export class ProfilePage implements OnInit {
 
           console.log(res);
 
-          this.presentToast();
+          this.presentToast("User have been saved...");
 
       }).catch(err => {
 
@@ -89,9 +89,9 @@ export class ProfilePage implements OnInit {
 
   }
 
-  async presentToast() {
+  async presentToast(msg?:any) {
     const toast = await this.toastController.create({
-      message: 'Your settings have been saved.',
+      message: msg,
       duration: 2000
     });
     toast.present();
@@ -145,7 +145,10 @@ export class ProfilePage implements OnInit {
 
         this.formEdit.value.img =  await this.storage.startUpload(fileData, 'photos');
 
-      },500)
+
+        this.presentToast('Photo have been loaded');
+
+      },100)
      
     }, (err) => {
       console.log(err);
