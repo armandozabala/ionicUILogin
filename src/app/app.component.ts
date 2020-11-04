@@ -19,6 +19,11 @@ export class AppComponent {
       icon: "list",
     },
     {
+      title: "Pets",
+      url: "/pets",
+      icon: "settings",
+    },
+    {
       title: "Settings",
       url: "/settings",
       icon: "settings",

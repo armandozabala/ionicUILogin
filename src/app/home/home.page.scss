@@ -77,25 +77,59 @@ ion-content{
     justify-content: center;
   }
 
-  .form-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 20px;
-    min-width: 160px;
-    height: 42px;
-    background-color: #394752;
-    border-radius: 20px;
-    font-size: 14px;
-    color: #FFFFFF;
-    text-transform: uppercase;
-    padding-top: 5px;
-    transition: all 0.4s;
-    box-shadow: 0 10px 30px 0px rgba(57, 71, 82, 0.5);
+
+  .wrapper {
+    max-width: 1200px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    margin: 20px;
+    display: grid;
+    grid-gap: 1rem;
   }
 
-  .form-btn:hover {
-    background-color: #28333b;
-    box-shadow: 0 10px 30px 0px rgba(57, 71, 82, 0.8);
+  @media (min-width: 300px) {
+  .wrapper { 
+    
+    margin-top: 30px;
+    margin-bottom: 30px;
+    grid-template-columns: repeat(2, 1fr); 
+  
   }
+}
+  .card {
+    background: #fff;
+    border-radius: 5px;
+    display: inline-block;
+    position: relative;
+    padding: 10px;
+    height: 10rem;
+
+  }
+  
+  .card-1 {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  }
+  
+  .card-2:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 12px 12px rgba(0,0,0,0.22);
+  }
+  
+
+  .card-2 {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  }
+
+  .card-3 {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  }
+  
+  .card-4 {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  }
+
+  
+
+ 
 }

@@ -1,0 +1,68 @@
+
+<ion-header>
+  <ion-toolbar color="secondary" [class.show-background]="showToolbar">
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+     
+
+      
+        <!-- <img src="./assets/logo_welcome.png" width="100px" />-->
+        <ion-title class="titleicon">
+          Pets
+      </ion-title>
+
+
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+
+  <svg class="back-blob" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#FF0066" d="M46.5,-55.7C61.6,-42.7,76,-29.3,79,-13.7C82,1.9,73.5,19.7,63.7,36.9C53.9,54.1,42.8,70.7,28.3,74.6C13.8,78.4,-4.1,69.5,-23.2,62.9C-42.3,56.3,-62.5,52.1,-75,39.1C-87.6,26.1,-92.4,4.5,-89.1,-16C-85.8,-36.5,-74.5,-55.8,-58.3,-68.6C-42,-81.3,-21,-87.4,-2.7,-84.2C15.7,-81,31.4,-68.6,46.5,-55.7Z" transform="translate(100 100)" />
+  </svg>
+
+
+  <div class="img">
+      
+    <img class="circle" [src]="IMAGE_PATH">
+ 
+</div>
+
+<ion-fab-button class="btnMover">
+  <ion-icon name="camera" (click)="presentActionSheet()"></ion-icon>
+</ion-fab-button>
+
+ 
+    <form [formGroup]="formPets" class="ion-padding" (ngSubmit)="editPets(formPets)">
+
+      <div class="wrap-input">
+        <input class="input" type="text" formControlName="name" name="user-name" placeholder="Name">
+    </div>
+
+
+    <div class="wrap-input">
+      <input class="input" type="text" formControlName="lastname" name="user-name" placeholder="Lastname">
+  </div>
+
+
+      <div class="wrap-input">
+          <input class="input" type="text" formControlName="email" name="email" placeholder="Email">
+      </div>
+
+    
+
+
+  <div class="container-form-btn">
+    <button type="submit" class="form-btn custom-font">
+          Edit
+    </button>
+  </div>  
+
+    </form>
+
+
+
+</ion-content>

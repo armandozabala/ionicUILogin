@@ -17,10 +17,11 @@ export class ProfilePage implements OnInit {
 
   formEdit: FormGroup;
   id:any;
-  IMAGE_PATH: any;
   showToolbar = false;
 
   loading:any;
+
+  IMAGE_PATH ='../../../assets/imgs/logocirculo.png';
 
   constructor(private authService: AuthService, 
               private afs: FirestoreService, 
@@ -30,11 +31,13 @@ export class ProfilePage implements OnInit {
               private storage: StorageService,
               public toastController: ToastController  ) { 
 
-                this.formEdit.value.img = '../../../assets/imgs/logocirculo.png';
+               
 
               }
 
   ngOnInit() {
+
+    
 
     this.presentLoading('Cargando información...');
 
