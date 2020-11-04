@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { LoadingController, MenuController, AlertController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { FirestoreService } from '../services/firestore.service';
 
@@ -12,11 +12,15 @@ import { FirestoreService } from '../services/firestore.service';
 })
 export class LoginPage implements OnInit {
 
+  loading:any;
+  
   formLogin: FormGroup;
   
   constructor(private formBuilder: FormBuilder,  
     private  router:  Router, 
+    private loadingController: LoadingController,
     private authService: AuthService, 
+    private alertController: AlertController,
     private afs: FirestoreService, 
     private menuCtrl: MenuController ) { }
 
@@ -34,6 +38,8 @@ export class LoginPage implements OnInit {
 
   login(form){
 
+    this.presentLoading();
+
     this.authService.signUser(form.value.email, form.value.password).then((data:any)=>{
 
 
@@ -44,6 +50,8 @@ export class LoginPage implements OnInit {
       this.router.navigate(['/home']);
 
       this.menuCtrl.enable(true);
+
+      this.loading.dismiss();
   
      /* this.afs.getUserUID(data.user.uid).subscribe((resp) => {
 
@@ -55,8 +63,32 @@ export class LoginPage implements OnInit {
 
     }).catch(err =>{
         console.log(err);
+        this.loading.dismiss();
+        this.presentAlert(err);
     });
     
   }
+
+
+
+
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      message: 'Cargando...',
+      translucent: true,
+    });
+    this.loading.present();
+}
+
+
+async presentAlert(message) {
+  const alert = await this.alertController.create({
+    subHeader: 'AVISO',
+    message: message,
+    buttons: ['Aceptar']
+  });
+
+  await alert.present();
+}
 
 }

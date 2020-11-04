@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { FirestoreService } from '../services/firestore.service';
-import { ActionSheetController, ToastController } from '@ionic/angular';
+import { ActionSheetController, ToastController, LoadingController } from '@ionic/angular';
 import { ScrollDetail } from '@ionic/core';
 
 
@@ -20,15 +20,23 @@ export class ProfilePage implements OnInit {
   IMAGE_PATH: any;
   showToolbar = false;
 
+  loading:any;
 
   constructor(private authService: AuthService, 
               private afs: FirestoreService, 
               private photo: PhotoService,
+              private loadingController: LoadingController,
               private actionSheetController: ActionSheetController,
               private storage: StorageService,
-              public toastController: ToastController  ) { }
+              public toastController: ToastController  ) { 
+
+                this.formEdit.value.img = '../../../assets/imgs/logocirculo.png';
+
+              }
 
   ngOnInit() {
+
+    this.presentLoading('Cargando información...');
 
     this.formEdit = new FormGroup({
       email: new FormControl({value: '', disabled: true}),
@@ -42,13 +50,13 @@ export class ProfilePage implements OnInit {
 
     this.afs.getUser(this.id).subscribe( (res:any) => {
 
-        console.log(res);
-
         this.initValueForm(res);
 
         this.formEdit.value.img =  res.img != null ?  res.img :  this.IMAGE_PATH='../../../assets/imgs/logocirculo.png';
 
         this.IMAGE_PATH = this.formEdit.value.img;
+
+        this.loading.dismiss();
 
     })
 
@@ -64,11 +72,11 @@ export class ProfilePage implements OnInit {
 
   edit(form){
 
-      console.log(form.value);
+    this.presentLoading('Saving....');
 
       this.afs.updateUser(this.id, form.value).then(res => {
 
-          console.log(res);
+          this.loading.dismiss();
 
           this.presentToast("User have been saved...");
 
@@ -133,6 +141,10 @@ export class ProfilePage implements OnInit {
 
    selectMedia() {
 
+    
+    this.presentLoading('Loading image....');
+
+
     this.photo.captureGalery().then( (imageData) => {
      
       
@@ -145,8 +157,9 @@ export class ProfilePage implements OnInit {
 
         this.formEdit.value.img =  await this.storage.startUpload(fileData, 'photos');
 
-
         this.presentToast('Photo have been loaded');
+
+        this.loading.dismiss();
 
       },100)
      
@@ -158,6 +171,9 @@ export class ProfilePage implements OnInit {
   }
 
   captureImage(){
+
+    this.presentLoading('Loading image....');
+
     this.photo.captureCamera().then((imageData) => {
      
        setTimeout( async () => {
@@ -167,6 +183,8 @@ export class ProfilePage implements OnInit {
         const fileData = this.storage.dataURLToBlob( this.IMAGE_PATH);
 
         this.formEdit.value.img = await this.storage.startUpload(fileData, 'photos');
+
+        this.loading.dismiss();
         
       },500)
      
@@ -175,5 +193,15 @@ export class ProfilePage implements OnInit {
        this.IMAGE_PATH = '../../../assets/imgs/logocirculo.png';
     });
   }
+
+
+  async presentLoading(msj:any) {
+    this.loading = await this.loadingController.create({
+      message: msj,
+      translucent: true,
+    });
+    this.loading.present();
+}
+
 
 }
