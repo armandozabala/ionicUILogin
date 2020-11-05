@@ -43,7 +43,7 @@ export class ProfilePage implements OnInit {
 
     this.formEdit = new FormGroup({
       email: new FormControl({value: '', disabled: true}),
-      name: new FormControl( null, Validators.required),
+      firstname: new FormControl( null, Validators.required),
       lastname: new FormControl( null, Validators.required),
     });  
 

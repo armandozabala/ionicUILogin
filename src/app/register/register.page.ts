@@ -37,7 +37,7 @@ export class RegisterPage implements OnInit {
     this.authService.createUser(form.value.email, form.value.password).then((data)=>{
 
         let us:any = {
-            name: form.value.name,
+            firstname: form.value.firstname,
             lastname: form.value.lastname,
             email: form.value.email,
             uid: data.user.uid

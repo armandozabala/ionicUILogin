@@ -24,6 +24,11 @@ export class AppComponent {
       icon: "settings",
     },
     {
+      title: "Calendar",
+      url: "/calendar",
+      icon: "settings",
+    },
+    {
       title: "Settings",
       url: "/settings",
       icon: "settings",
