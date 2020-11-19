@@ -38,7 +38,20 @@ export class LoginPage implements OnInit {
 
   login(form){
 
+
+
+    
+    if(form.value.email == null && form.value.password == null)
+    {
+      
+      this.presentAlert("Empty fields...");
+      return;
+      
+    }
+
     this.presentLoading();
+
+ 
 
     this.authService.signUser(form.value.email, form.value.password).then((data:any)=>{
 

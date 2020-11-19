@@ -1,4 +1,4 @@
-import { MenuController, ToastController } from '@ionic/angular';
+import { LoadingController, MenuController, ToastController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
@@ -13,10 +13,12 @@ import { Router } from '@angular/router';
 export class RegisterPage implements OnInit {
   
   form: FormGroup;
+  loading:any;
 
   constructor( private authService: AuthService, 
                private afs: FirestoreService,
                private router: Router,
+               private loadingController: LoadingController,
                private toastController: ToastController,
                private menuCtrl: MenuController   ) { }
 
@@ -27,12 +29,14 @@ export class RegisterPage implements OnInit {
     this.form = new FormGroup({
       email: new FormControl( null, [Validators.required, Validators.email, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
       password: new FormControl( null, Validators.required),
-      name: new FormControl( null, Validators.required),
+      firstname: new FormControl( null, Validators.required),
       lastname: new FormControl( null, Validators.required),
     });  
   }
 
   register(form){
+
+    this.presentLoading('Saving....');
 
     this.authService.createUser(form.value.email, form.value.password).then((data)=>{
 
@@ -50,6 +54,8 @@ export class RegisterPage implements OnInit {
             this.router.navigate(['/login']);
 
             this.presentToast();
+
+            this.loading.dismiss();
 
 
         }).catch(err => {
@@ -73,5 +79,15 @@ export class RegisterPage implements OnInit {
     });
     toast.present();
   }
+
+
+  async presentLoading(msj:any) {
+    this.loading = await this.loadingController.create({
+      message: msj,
+      translucent: true,
+    });
+    this.loading.present();
+}
+
 
 }

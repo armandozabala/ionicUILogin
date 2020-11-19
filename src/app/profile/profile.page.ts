@@ -93,7 +93,7 @@ export class ProfilePage implements OnInit {
   initValueForm(user: any){
 
     this.formEdit.patchValue({
-      name: user.name,
+      firstname: user.firstname,
       lastname: user.lastname,
       email: user.email
     });
